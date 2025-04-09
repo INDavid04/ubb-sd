@@ -1,10 +1,12 @@
+/// TODO: try to understand the problems and write full solutions for each one of them (4 problems, see the main function)
+
 #include <iostream>
 using namespace std;
 
 class InsertIntoBST {
 public:
     TreeNode* insertIntoBST(TreeNode* root, int val) {
-        // BST comes from binary search tree
+        /// BST comes from binary search tree
         if (root == nullptr) {
             TreeNode* newNode = new TreeNode(val);
             return newNode;
@@ -57,6 +59,8 @@ class SerachKeyInBST {
 int main() {
     /// leetcode701, link: https://leetcode.com/problems/insert-into-a-binary-search-tree/description/
     /// techiedelight, link: https://www.techiedelight.com/?problem=SearchKeyInBST
+    /// techiedelight, link: https://www.techiedelight.com/?problem=InorderSuccesorBST
+    /// leetcode450, link: https://leetcode.com/problems/delete-node-in-a-bst/description/
 
     return 0;
 }
