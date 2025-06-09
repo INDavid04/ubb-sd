@@ -1,6 +1,6 @@
 // Colocviu Structuri de date
 // 18 Iunie 2024
-// Rezolvat pe 9 Iunie 2025, 16:15 - TODO
+// Rezolvat pe 9 Iunie 2025, 16:15 - 17:15
 
 #include <iostream>
 #include <string>
