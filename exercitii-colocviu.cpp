@@ -7,23 +7,23 @@ using namespace std;
 
 /// 1. Să se insereze un element cu valoarea x la sfârșitul unei liste simplu înlănțuite.
 
-struct Node {
+struct Node1 {
     int val;
-    Node* next;
+    Node1* next;
 };
 
-void insert_end(Node*& head, int x) {
-    Node* new_node = new Node{x, nullptr};
+void insert_end(Node1*& head, int x) {
+    Node1* new_node = new Node1{x, nullptr};
     if (!head) {
         head = new_node;
         return;
     }
-    Node* p = head;
+    Node1* p = head;
     while (p->next) p = p->next;
     p->next = new_node;
 }
 
-void print_list(Node* head) {
+void print_list(Node1* head) {
     while (head) {
         cout << head->val << " ";
         head = head->next;
@@ -31,7 +31,75 @@ void print_list(Node* head) {
     cout << endl;
 }
 
+// int main () {
+//     Node1* cap = nullptr;
+//     print_list(cap);
+//     insert_end(cap, 1);
+//     print_list(cap);
+//     insert_end(cap, 2);
+//     print_list(cap);
+//     insert_end(cap, 3);
+//     print_list(cap);
+//     insert_end(cap, 4);
+//     print_list(cap);
+// }
+
 /// 2. Să se insereze un element cu valoarea x pe poziția k într-o listă simplu înlănțuită. Pozițiile sunt indexate de la 0. Dacă k este 0, inserarea se face la început.
+
+struct Node2 {
+    int val;
+    Node2* next;
+};
+
+void insert_value_on_position(Node2*& head, int value, int position) {
+    Node2* new_node = new Node2 {value, nullptr};
+    if (!head) {
+        if (position == 0) {
+            head = new_node;
+            return;
+        } else {
+            cout << "Nu pot adauga pe aceasta pozitie\n";
+            return;
+        }
+    }
+    Node2* p = head;
+    position--;
+    while(position) {
+        p = p->next;
+        position--;
+    }
+    cout << "DEGUG: postion = " << position << "\n";
+    if (position) {
+        cout << "Nu pot adauga pe aceasta pozitie\n";
+    } else if (p->next == nullptr) {
+        p->next = new_node;
+    } else {
+        Node2* copie = p->next;
+        p->next = new_node;
+        new_node->next = copie;
+    }
+}
+
+void print_list(Node2* head) {
+    while(head) {
+        cout << head->val << " ";
+        head = head->next;
+    }
+    cout << "\n";
+}
+
+// int main () {
+//     Node2* head = nullptr;
+//     insert_value_on_position(head, 1, 0);
+//     print_list(head);
+//     insert_value_on_position(head, 8, 1);
+//     print_list(head);
+//     insert_value_on_position(head, 7, 1);
+//     print_list(head);
+//     insert_value_on_position(head, 100, 30);
+//     print_list(head);
+//     return 0;
+// }
 
 //////////////
 // HEAP MAX //
@@ -72,27 +140,27 @@ int heap_pop() {
 
 /// 5. Să se insereze un element cu valoarea x la sfârșitul unei liste circular simplu înlănțuite.
 
-void insert_circular(Node*& tail, int x) {
-    Node* new_node = new Node{x, nullptr};
-    if (!tail) {
-        new_node->next = new_node;
-        tail = new_node;
-    } else {
-        new_node->next = tail->next;
-        tail->next = new_node;
-        tail = new_node;
-    }
-}
+// void insert_circular(Node*& tail, int x) {
+//     Node* new_node = new Node{x, nullptr};
+//     if (!tail) {
+//         new_node->next = new_node;
+//         tail = new_node;
+//     } else {
+//         new_node->next = tail->next;
+//         tail->next = new_node;
+//         tail = new_node;
+//     }
+// }
 
-void print_circular(Node* tail) {
-    if (!tail) return;
-    Node* p = tail->next;
-    do {
-        cout << p->val << " ";
-        p = p->next;
-    } while (p != tail->next);
-    cout << endl;
-}
+// void print_circular(Node* tail) {
+//     if (!tail) return;
+//     Node* p = tail->next;
+//     do {
+//         cout << p->val << " ";
+//         p = p->next;
+//     } while (p != tail->next);
+//     cout << endl;
+// }
 
 /// 6. Să se șteargă primul nod cu valoarea x dintr-o listă circular simplu înlănțuită.
 
@@ -151,3 +219,8 @@ void inorder(TreeNode* root) {
 }
 
 /// 10. Scrie o funcție care caută o valoare x într-un arbore binar de căutare (BST). Returnează true/false.
+
+int main () {
+    
+    return 0;
+}
