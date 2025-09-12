@@ -12,15 +12,29 @@
 using namespace std;
 
 void heapifyUp(int position, int *minheap) {
-    if (position == 1 || position == 2) {
+    if (position == 0) {
         return;
-    } else {
-        if (minheap[position] < minheap[(position) / 2]) {
-            int temp = minheap[position - 1];
-            minheap[position] = minheap[(position) / 2];
-            minheap[(position) / 2] = temp;
-            heapifyUp((position) / 2, minheap);
-        }
+    }
+    if (minheap[position] < minheap[(position - 1)/2]) {
+        swap(minheap[position], minheap[(position - 1)/2]);
+        heapifyUp((position - 1)/2, minheap);
+    }
+}
+
+void heapifyDown(int position, int *minheap, int &size) {
+    int left = 2 * position + 1;
+    int right = 2 * position + 2;
+    int smallest = position;
+
+    if (left < size && minheap[left] < minheap[smallest]) {
+        smallest = left;
+    }
+    if (right < size && minheap[right] < minheap[smallest]) {
+        smallest = right;
+    }
+    if (smallest != position) {
+        swap(minheap[position], minheap[smallest]);
+        heapifyDown(smallest, minheap, size);
     }
 }
 
@@ -29,23 +43,12 @@ void insert(int value, int *minheap, int &size) {
     heapifyUp(size - 1, minheap);
 }
 
-void heapifyDown(int position, int *minheap, int &size) {
-    if (size / 2 <= position) {
-        return;
-    } else if (minheap[2 * position + 1] < minheap[2 * position + 2]) {
-        heapifyDown(2 * position + 1, minheap, size);
-    } else {
-        heapifyDown(2 * position + 2, minheap, size);
-    }
-}
-
 int extractMin(int *minheap, int &size) {
     if (size <= 0) {
         cout << "Heap gol\n";
         return -1;
     } else {
         int root = minheap[0];
-        cout << "Extrag: " << minheap[0] << "\n";
         minheap[0] = minheap[size - 1];
         size--;
         heapifyDown(0, minheap, size);
@@ -66,13 +69,13 @@ int main() {
         getline(cin, raspuns);
     } while (raspuns == "da");
 
-    cout << "\nMin heap:\n";
+    cout << "\nMin heap array:\n";
     for (int i = 0; i < size; i++) {
         cout << minheap[i] << " ";
     }
 
     cout << "\n\nExtragem fiecare minim:\n";
-    for (int i = 0; i < size; i++) {
+    while (size) {
         cout << extractMin(minheap, size) << " ";
     }
     cout << "\n";
