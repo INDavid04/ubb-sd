@@ -1,6 +1,6 @@
-/// 2025-09-15-1905-TODO
+/// 2025-09-15-1950-2024
 
-/// Incercarea mea de a transforma codul cu stl fara stl
+/// GPT
 
 /// Simulare directoare (stack)
 /// Input:
@@ -43,21 +43,17 @@ bool eDouaPuncte(const char director[]) {
     }
 }
 
-bool empty(const char &stack) {
-    return stack[0][0] == '\0';
+void pop(int &size) {
+    size--;
 }
 
-void pop(const char stack[]) {
-    for (int i = 0; stack[i + 1][0] != '\0'; i++) {
-        for (j = 0; stack[i][j] != '\0'; j++) {
-            stack[i][j] = stack[i + 1][j];
-        }
+void push(char stack[][80], const char director[], int &size) {
+    int i = 0;
+    for(; director[i] != '\0'; i++) {
+        stack[size][i] = director[i];
     }
-    stack[i][0] = '\n';
-}
-
-void push(const char stack[], const char director[]) {
-    /// aici m-am blocat
+    stack[size][i] = '\0';
+    size++;
 }
 
 int main() {
@@ -66,15 +62,12 @@ int main() {
     cin.get(); /// consuma \n
 
     char stack[20][80];
-    char comanda[20];
+    char output[20][80];
+    int size = 0, outputSize = 0;;
 
     for (int i = 0; i < n; i++) {
-        stack[i][0] = 0; /// initializam stiva cu \0
-    }
-
-    for (int i = 0; i < n; i++) {
-        cin.get(comanda, 20);
-        cin.get();
+        char comanda[20];
+        cin.getline(comanda, 20);
         
         if (eComandaCd(comanda)) {
             char director[20];
@@ -82,22 +75,38 @@ int main() {
             for (int j = 3; comanda[j] != '\0'; j++) {
                 director[k++] = comanda[j];
             }
-            if (eDouaPuncte(dir)) {
-                if (!empty(stack)) {
-                    pop(stack);
+            director[k] = '\0'; /// la final
+            
+            if (eDouaPuncte(director)) {
+                if (size) {
+                    pop(size);
                 }
             } else {
-                // push(stack, director);
+                push(stack, director, size);
             }
-        } else if (comanda == "pwd") {
-            if (!empty(stack)) {
-                // cout << st.top() << "\n";
+        } else if (eComandaPwd(comanda)) {
+            if (size) {
+                size--;
+                int j = 0;
+                for (; stack[size][j] != 0; j++) {
+                    output[outputSize][j] = stack[size][j];
+                }
+                output[outputSize][j] = '\0';
+                size++;
+                outputSize++;
             } else {
                 cout << "/\n";
             }
         } else {
             cout << "Nu cunosc comanda\n";
         }
+    }
+
+    for (int i = 0; i < outputSize; i++) {
+        for (int j = 0; output[i][j] != '\0'; j++) {
+            cout << output[i][j];
+        }
+        cout << '\n';
     }
 
     return 0;
