@@ -1,6 +1,6 @@
-/// 2025-09-15-1807-TODO
+/// 2025-09-15-1854-1900
 
-/// Incercarea mea
+/// GPT
 
 /// Simulare directoare (stack)
 /// Input:
@@ -16,46 +16,40 @@
 /// Hint: folosește stiva de șiruri, nu de numere.
 
 #include <iostream>
+#include <stack>
 #include <string>
 
 using namespace std;
 
-void push(vector<string> &stack, const string &comanda) {
-    char director[100];
-    int k = 0;
-    for (int i = 3; comanda[i] != "\0"; i++) {
-        directoare[k++] = comanda[i];
-    }
-    stack.push_front(director);
-}
-
-const string top(vector<string> &stack) {
-    return stack[0];
-}
-
 int main() {
-    int numarComenzi;
+    int n;
+    cin >> n;
+    cin.get(); /// consuma \n
+
+    stack<string> st;
     string comanda;
-    vector<string> stack;
-    vector<string> output;
 
-    cin >> numarComenzi;
-    cin.get();
-
-    while(numarComenzi--) {
+    for (int i = 0; i < n; i++) {
         getline(cin, comanda);
-        if (comanda[0] == "c") {
-            push(stack, comanda);
-        } else if (comanda[0] == "p") {
-            output.push_back(top(stack));
+        if (comanda.substr(0, 3) == "cd ") {
+            string dir = comanda.substr(3); /// de pe pozitia 3 pana la final
+            if (dir == "..") {
+                if (!st.empty()) {
+                    st.pop();
+                }
+            } else {
+                st.push(dir);
+            }
+        } else if (comanda == "pwd") {
+            if (!st.empty()) {
+                cout << st.top() << "\n";
+            } else {
+                cout << "/\n";
+            }
         } else {
-            cout << "Nu cunosc aceasta comanda\n";
+            cout << "Nu cunosc comanda\n";
         }
     }
-
-    for (auto comanda : output) {
-        cout << comanda << "\n";
-    } 
 
     return 0;
 }
